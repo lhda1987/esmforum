@@ -1,0 +1,44 @@
+flowchart LR
+
+    U[Usuário]
+
+    subgraph Apresentacao[Camada de Apresentação]
+        F[Frontend React]
+    end
+
+    subgraph Backend[Backend Node.js / Express]
+        R[Rotas / server.js]
+        S[Services]
+        M[modelo.js]
+        REP[Repositories]
+    end
+
+    subgraph Dados[Camada de Dados]
+        BDUTIL[bd_utils.js]
+        DB[(SQLite)]
+    end
+
+    U --> F
+
+    F -->|HTTP / JSON| R
+
+    R --> S
+    R --> M
+
+    S --> REP
+
+    REP --> BDUTIL
+    M --> BDUTIL
+
+    BDUTIL --> DB
+
+    DB --> BDUTIL
+    BDUTIL --> REP
+    BDUTIL --> M
+
+    REP --> S
+    S --> R
+    M --> R
+
+    R -->|JSON| F
+    F --> U
