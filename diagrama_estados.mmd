@@ -1,0 +1,6 @@
+stateDiagram-v2
+    [*] --> Upvote: Usuário vota positivamente
+    [*] --> Downvote: Usuário vota negativamente
+
+    Upvote --> Downvote: Usuário altera para downvote
+    Downvote --> Upvote: Usuário altera para upvote

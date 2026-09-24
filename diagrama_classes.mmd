@@ -1,0 +1,39 @@
+classDiagram
+
+class Usuario {
+    +int id_usuario
+    +string nome
+}
+
+class Pergunta {
+    +int id_pergunta
+    +string texto
+    +int id_usuario
+    +int id_categoria
+}
+
+class Resposta {
+    +int id_resposta
+    +string texto
+    +int id_pergunta
+    +int id_usuario
+}
+
+class Categoria {
+    +int id_categoria
+    +string nome
+}
+
+class Voto {
+    +int id_voto
+    +int tipo
+    +int id_usuario
+    +int id_pergunta
+}
+
+Usuario "1" --> "0..*" Pergunta : cria
+Usuario "1" --> "0..*" Resposta : responde
+Pergunta "1" --> "0..*" Resposta : possui
+Categoria "1" --> "0..*" Pergunta : classifica
+Usuario "1" --> "0..*" Voto : realiza
+Pergunta "1" --> "0..*" Voto : recebe

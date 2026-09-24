@@ -1,0 +1,25 @@
+sequenceDiagram
+    actor Usuario
+    participant Frontend
+    participant API
+    participant Banco
+
+    Usuario->>Frontend: Seleciona upvote ou downvote
+    Frontend->>API: Envia voto e id da pergunta
+    API->>Banco: Consulta voto existente do usuário
+    Banco-->>API: Retorna voto atual ou ausência de voto
+
+    alt Usuário ainda não votou
+        API->>Banco: Registra novo voto
+        Banco-->>API: Confirma registro
+    else Usuário altera o voto
+        API->>Banco: Atualiza voto existente
+        Banco-->>API: Confirma atualização
+    else Usuário repete o mesmo voto
+        API->>API: Mantém voto atual
+    end
+
+    API->>Banco: Calcula total de votos da pergunta
+    Banco-->>API: Retorna total atualizado
+    API-->>Frontend: Retorna resultado da votação
+    Frontend-->>Usuario: Atualiza contador de votos

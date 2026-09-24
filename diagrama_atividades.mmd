@@ -1,0 +1,18 @@
+flowchart TD
+    A([Início]) --> B[Exibir perguntas]
+    B --> C[Usuário seleciona upvote ou downvote]
+    C --> D[Identificar usuário e pergunta]
+    D --> E{Já existe voto?}
+
+    E -- Não --> F[Registrar novo voto]
+    E -- Sim --> G{Novo voto é diferente?}
+
+    G -- Sim --> H[Atualizar voto existente]
+    G -- Não --> I[Manter voto atual]
+
+    F --> J[Recalcular total de votos]
+    H --> J
+    I --> J
+
+    J --> K[Atualizar contador na interface]
+    K --> L([Fim])
