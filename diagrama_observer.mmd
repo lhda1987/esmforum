@@ -1,0 +1,25 @@
+classDiagram
+
+class RespostaService {
+    -observadores
+    +adicionarObservador()
+    +cadastrar()
+    +notificar()
+}
+
+class Observador {
+    <<interface>>
+    +atualizar(resposta)
+}
+
+class NotificadorNovaResposta {
+    +atualizar(resposta)
+}
+
+class RespostaRepository {
+    +salvar()
+}
+
+RespostaService --> RespostaRepository : salva resposta
+RespostaService --> Observador : notifica
+Observador <|.. NotificadorNovaResposta
