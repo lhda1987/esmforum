@@ -1,0 +1,57 @@
+flowchart LR
+
+    U[Usuário]
+
+    subgraph Frontend[Frontend React]
+        UI[Interface]
+    end
+
+    subgraph Backend[Backend Node.js / Express]
+
+        subgraph View[View]
+            JSON[Resposta JSON]
+        end
+
+        subgraph Controller[Controllers]
+            BC[BuscaController]
+            RC[RespostaController]
+        end
+
+        subgraph Model[Models / Negócio]
+            BS[BuscaService]
+            RS[RespostaService]
+            PR[PerguntaRepository]
+            RR[RespostaRepository]
+        end
+    end
+
+    DB[(SQLite)]
+
+    U --> UI
+
+    UI -->|HTTP| BC
+    UI -->|HTTP| RC
+
+    BC --> BS
+    RC --> RS
+
+    BS --> PR
+    RS --> RR
+
+    PR --> DB
+    RR --> DB
+
+    DB --> PR
+    DB --> RR
+
+    PR --> BS
+    RR --> RS
+
+    BS --> BC
+    RS --> RC
+
+    BC --> JSON
+    RC --> JSON
+
+    JSON --> UI
+    UI --> U
