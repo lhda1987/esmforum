@@ -1,8 +1,27 @@
 const express = require('express')
 const modelo = require('./modelo.js');
+const bd = require('./bd/bd_utils.js');
+const { criarPerguntaRepository } = require('./repositories/perguntaRepository.js');
+const { estrategiaBuscaTexto } = require('./services/estrategiaBuscaTexto.js');
+const { criarBuscaPerguntasService } = require('./services/buscaPerguntasService.js');
+const { criarBuscaPerguntasRouter } = require('./routes/buscaPerguntas.js');
 
 const app = express()
 app.use(express.json());
+
+const perguntaRepository = criarPerguntaRepository(bd);
+
+const buscaPerguntasService = criarBuscaPerguntasService(
+  perguntaRepository,
+  estrategiaBuscaTexto
+);
+
+const buscaPerguntasRouter = criarBuscaPerguntasRouter(
+  express,
+  buscaPerguntasService
+);
+
+app.use('/perguntas/busca', buscaPerguntasRouter);
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
